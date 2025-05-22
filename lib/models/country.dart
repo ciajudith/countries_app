@@ -21,8 +21,11 @@ class Country {
       capitals: (json['capital'] as List).cast<String>(),
       population: json['population'] as int,
       area: (json['area'] as num).toDouble(),
-      languages:
-      (json['languages'] as Map<String, dynamic>).values.cast<String>().toList(),
+      languages: (json['languages'] as Map<String, dynamic>)
+          .values
+          .cast<String>()
+          .toList(),
       flagUrl: json['flags']['png'] as String,
     );
+  }
 }

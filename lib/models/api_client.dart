@@ -8,31 +8,14 @@ class ApiClient {
   ApiClient._(this._dio) {
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (opts, handler) {
-          return handler.next(opts);
-        },
-        onResponse: (resp, handler) {
-          return handler.next(resp);
-        },
-        onError: (DioException err, handler) {
-          if (err.type == DioExceptionType.connectionTimeout ||
-              err.type == DioExceptionType.receiveTimeout ||
-              err.type == DioExceptionType.sendTimeout) {
-            return handler.reject(
-              ApiException('Délai de connexion dépassé'),
-            );
-          } else if (err.response != null) {
-            return handler.reject(
-              ApiException(
-                'Erreur ${err.response!.statusCode} : '
-                '${err.response!.statusMessage}',
-                statusCode: err.response!.statusCode,
-              ),
-            );
+        onError: (error, handler) {
+          if (error.response != null) {
+            final statusCode = error.response?.statusCode;
+            final message = error.response?.data['message'] ?? 'Unknown error';
+            throw ApiException(message, statusCode: statusCode);
           } else {
-            return handler.reject(
-              ApiException('Erreur réseau : ${err.message}'),
-            );
+            throw ApiException('Network error',
+                statusCode: error.response?.statusCode);
           }
         },
       ),
@@ -62,5 +45,5 @@ class ApiClient {
     return ApiClient._(dio);
   }
 
-  Dio get instance => _dio;
+  Dio get client => _dio;
 }
