@@ -89,7 +89,7 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
               ),
               child: Center(
                 child: Text(
-                  'Intégrer ici votre widget `flutter_map`',
+                  'Carte interactive ici - Upcoming feature',
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
               ),

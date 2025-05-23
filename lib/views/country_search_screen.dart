@@ -1,6 +1,8 @@
 import 'package:countries_app/models/api_client.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import 'package:countries_app/data/country_remote_data_source.dart';
@@ -50,8 +52,14 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
     final ctrl = Provider.of<CountryController>(context);
 
     if (_isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+      return Scaffold(
+        body: Center(
+          child: LottieBuilder.asset(
+            'assets/json/loading.json',
+            width: 110,
+            height: 110,
+          ),
+        ),
       );
     }
     if (_error != null) {
@@ -60,66 +68,93 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Rechercher un pays')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TypeAheadField<Country>(
-              builder:
-                  (ctx, TextEditingController controller, FocusNode focusNode) {
-                return TextField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(
-                    hintText: 'Nom du pays',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                );
-              },
-              suggestionsCallback: (pattern) {
-                return _allCountries
-                    .where((c) =>
-                        c.name.toLowerCase().startsWith(pattern.toLowerCase()))
-                    .toList();
-              },
-              itemBuilder: (ctx, Country country) {
-                return ListTile(
-                  leading: Image.network(country.flagUrl, width: 32),
-                  title: Text(country.name),
-                );
-              },
-              // plus de noItemsFoundBuilder, on utilise emptyBuilder
-              emptyBuilder: (ctx) => const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text('Aucun pays trouvé'),
-              ),
-              // à la sélection, on déclenche fetchCountry()
-              onSelected: (Country country) {
-                ctrl.fetchCountry(country.name);
-              },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Rechercher un pays',
+            style: PoppinsTextStyle.medium.copyWith(
+              color: AppColors.green,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-
-            const SizedBox(height: 20),
-
-            // état de chargement / erreur / success
-            if (ctrl.status == CountryStatus.loading)
-              const CircularProgressIndicator(),
-            if (ctrl.status == CountryStatus.error)
-              Text(
-                ctrl.errorMessage ?? 'Erreur',
-                style: PoppinsTextStyle.medium.copyWith(
-                  color: AppColors.accent,
+          ),
+          leading: IconButton(
+            icon: const Icon(CupertinoIcons.back,
+                color: AppColors.green, size: 24),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              TypeAheadField<Country>(
+                builder: (ctx, TextEditingController controller,
+                    FocusNode focusNode) {
+                  return TextField(
+                    controller: controller,
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      hintText: 'Saisissez le nom d\'un pays',
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: AppColors.goldDark,
+                        size: 20,
+                        weight: 4,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: AppColors.lightGray,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                suggestionsCallback: (pattern) {
+                  return _allCountries
+                      .where((c) => c.name
+                          .toLowerCase()
+                          .startsWith(pattern.toLowerCase()))
+                      .toList();
+                },
+                itemBuilder: (ctx, Country country) {
+                  return ListTile(
+                    leading: Image.network(country.flagUrl, width: 32),
+                    title: Text(country.name),
+                  );
+                },
+                // plus de noItemsFoundBuilder, on utilise emptyBuilder
+                emptyBuilder: (ctx) => const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text('Aucun pays trouvé'),
                 ),
+                // à la sélection, on déclenche fetchCountry()
+                onSelected: (Country country) {
+                  ctrl.fetchCountry(country.name);
+                },
               ),
-            if (ctrl.status == CountryStatus.success && ctrl.country != null)
-              // ton CountryDetailledWidget gère déjà son propre Expanded
-              CountryDetailledWidget(country: ctrl.country!),
-          ],
+              const SizedBox(height: 20),
+              if (ctrl.status == CountryStatus.loading)
+                LottieBuilder.asset(
+                  'assets/json/loading.json',
+                  width: 110,
+                  height: 110,
+                ),
+              if (ctrl.status == CountryStatus.error)
+                Text(
+                  ctrl.errorMessage ?? 'Erreur',
+                  style: PoppinsTextStyle.medium.copyWith(
+                    color: AppColors.accent,
+                  ),
+                ),
+              if (ctrl.status == CountryStatus.success && ctrl.country != null)
+                CountryDetailledWidget(country: ctrl.country!),
+            ],
+          ),
         ),
       ),
     );

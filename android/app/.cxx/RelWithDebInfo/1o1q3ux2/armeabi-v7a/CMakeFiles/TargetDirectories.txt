@@ -1,0 +1,2 @@
+D:/flutter/countries_app/android/app/.cxx/RelWithDebInfo/1o1q3ux2/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/flutter/countries_app/android/app/.cxx/RelWithDebInfo/1o1q3ux2/armeabi-v7a/CMakeFiles/rebuild_cache.dir

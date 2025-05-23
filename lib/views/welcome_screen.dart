@@ -99,16 +99,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 16),
-
-                  // Sous-titre
                   FadeTransition(
                     opacity: _fadeAnim,
                     child: Text(
                       'Explorez les pays du monde en un instant',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.adamina(
+                      style: GoogleFonts.inter(
                         color: AppColors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -122,39 +119,32 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 32),
                   FadeTransition(
                     opacity: _fadeAnim,
                     child: OpenContainer(
                       transitionType: ContainerTransitionType.fadeThrough,
-                      openBuilder: (_, __) {
-                        return const CountrySearchScreen();
-                      },
+                      openBuilder: (ctx, _) => const CountrySearchScreen(),
                       closedElevation: 6,
-                      closedShape: const StadiumBorder(),
+                      closedShape: StadiumBorder(),
                       closedColor: AppColors.green,
-                      closedBuilder: (ctx, action) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 48,
-                            child: Center(
-                              child: Text(
-                                'Commencer',
-                                style: GoogleFonts.adamina(
-                                  color: AppColors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  shadows: [
-                                    const Shadow(
-                                      blurRadius: 8,
-                                      color: Colors.black45,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
+                      closedBuilder: (ctx, openContainer) {
+                        return SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: openContainer,
+                            style: ElevatedButton.styleFrom(
+                              shape: const StadiumBorder(),
+                              elevation: 6,
+                              backgroundColor: AppColors.green,
+                            ),
+                            child: Text(
+                              'Commencer',
+                              style: GoogleFonts.inter(
+                                color: AppColors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
