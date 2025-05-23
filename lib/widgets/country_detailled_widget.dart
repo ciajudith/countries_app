@@ -1,5 +1,5 @@
+import 'package:countries_app/constants/poppins_text_style.dart';
 import 'package:countries_app/models/country.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CountryDetailledWidget extends StatefulWidget {
@@ -19,7 +19,6 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hero sur le drapeau pour une belle transition
             Hero(
               tag: 'flag_${widget.country.name}',
               child: ClipRRect(
@@ -37,18 +36,19 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
             // Nom du pays
             Text(
               widget.country.name,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: PoppinsTextStyle.medium.copyWith(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 8),
-
-            // Card animée des infos clés
             AnimatedContainer(
               duration: const Duration(milliseconds: 500),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 8,
@@ -96,28 +96,6 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
             ),
 
             const SizedBox(height: 24),
-            // Section pour infos complémentaires
-            // ExpansionTile(
-            //   title: Text('Informations complémentaires'),
-            //   children: [
-            //     ListTile(
-            //       leading: Icon(Icons.info_outline),
-            //       title: Text('Statut indépendant'),
-            //       subtitle: Text(widget.country.independent ? 'Oui' : 'Non'),
-            //     ),
-            //     ListTile(
-            //       leading: Icon(Icons.public),
-            //       title: Text('Membre de l’ONU'),
-            //       subtitle: Text(widget.country.unMember ? 'Oui' : 'Non'),
-            //     ),
-            //     if (widget.country.gini.isNotEmpty)
-            //       ListTile(
-            //         leading: Icon(Icons.bar_chart),
-            //         title: Text('Indice de Gini (${widget.country.gini.keys.first})'),
-            //         subtitle: Text('${widget.country.gini.values.first}'),
-            //       ),
-            //   ],
-            // ),
           ],
         ),
       ),
@@ -137,8 +115,15 @@ class _InfoRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Text('$label : ', style: TextStyle(fontWeight: FontWeight.w600)),
-          Expanded(child: Text(value)),
+          Text('$label : ',
+              style: PoppinsTextStyle.medium
+                  .copyWith(fontWeight: FontWeight.w600)),
+          Expanded(
+              child: Text(value,
+                  style: PoppinsTextStyle.medium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey.shade700,
+                  ))),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:countries_app/data/country_data_controller.dart';
 import 'package:countries_app/data/country_remote_data_source.dart';
 import 'package:countries_app/models/api_client.dart';
-import 'package:countries_app/views/country_search_screen.dart';
+import 'package:countries_app/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +24,9 @@ class CountryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: CountrySearchScreen(),
+      debugShowCheckedModeBanner: false,
+      title: 'Countries App',
+      home: WelcomeScreen(),
     );
   }
 }
