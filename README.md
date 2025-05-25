@@ -84,9 +84,7 @@ UI (écran) ----> CountryDataController (Provider) ----> CountryRemoteDataSource
    ```bash
    flutter run
    ```
-
-> **Note** : si vous utilisez une clé d’API ou des variables sensibles, configurez le fichier `.env` en conséquence.
-
+   
 ## 📚 Ressources & API
 
 * **REST Countries** : [https://restcountries.com/v3.1](https://restcountries.com/v3.1) (récupération des données de chaque pays)
