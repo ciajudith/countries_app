@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:countries_app/constants/colors.dart';
 import 'package:countries_app/constants/poppins_text_style.dart';
+import 'package:countries_app/constants/text.dart';
 import 'package:countries_app/views/country_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,7 +52,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       body: Stack(
         children: [
           Positioned.fill(
-            child: LottieBuilder.asset("assets/json/countries.json",
+            child: LottieBuilder.asset(AppStrings.countriesJsonPath,
                 repeat: true,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
@@ -62,8 +63,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black.withOpacity(0.6),
-                    Colors.black.withOpacity(0.2)
+                    AppColors.black.withValues(alpha: 0.6),
+                    AppColors.black.withValues(alpha: 0.2),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     child: FadeTransition(
                       opacity: _fadeAnim,
                       child: Text(
-                        'Bienvenue sur WorldLens',
+                        AppStrings.welcomeTitle,
                         textAlign: TextAlign.center,
                         style: PoppinsTextStyle.medium.copyWith(
                           color: AppColors.white,
@@ -103,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   FadeTransition(
                     opacity: _fadeAnim,
                     child: Text(
-                      'Explorez les pays du monde en un instant',
+                      AppStrings.welcomeSubtitle,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         color: AppColors.white,
@@ -140,7 +141,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               backgroundColor: AppColors.green,
                             ),
                             child: Text(
-                              'Commencer',
+                              AppStrings.startButton,
                               style: GoogleFonts.inter(
                                 color: AppColors.white,
                                 fontSize: 20,

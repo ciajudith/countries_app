@@ -1,3 +1,4 @@
+import 'package:countries_app/constants/colors.dart';
 import 'package:countries_app/data/country_data_controller.dart';
 import 'package:countries_app/data/country_remote_data_source.dart';
 import 'package:countries_app/models/api_client.dart';
@@ -26,6 +27,21 @@ class CountryApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Countries App',
+      theme: ThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(color: AppColors.gray.withValues(alpha: 0.4)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: AppColors.goldDark, width: 2),
+          ),
+        ),
+        cardColor: AppColors.white,
+        scaffoldBackgroundColor: AppColors.white,
+      ),
       home: WelcomeScreen(),
     );
   }

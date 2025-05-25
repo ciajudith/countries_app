@@ -10,6 +10,7 @@ class PoppinsTextStyle {
   static TextStyle medium = TextStyle(
     fontFamily: GoogleFonts.poppins().fontFamily,
     fontWeight: FontWeight.w500,
+    fontSize: 16,
   );
 
   static TextStyle semiBold = TextStyle(

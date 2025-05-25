@@ -1,4 +1,6 @@
+import 'package:countries_app/constants/colors.dart';
 import 'package:countries_app/constants/poppins_text_style.dart';
+import 'package:countries_app/constants/text.dart';
 import 'package:countries_app/models/country.dart';
 import 'package:flutter/material.dart';
 
@@ -32,8 +34,6 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Nom du pays
             Text(
               widget.country.name,
               style: PoppinsTextStyle.medium.copyWith(
@@ -48,11 +48,11 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: AppColors.gray.withValues(alpha: 0.4),
                     blurRadius: 8,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
@@ -60,25 +60,27 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _InfoRow(
-                      label: 'Capitale',
+                      label: AppStrings.capital,
                       value: widget.country.capitals.join(', ')),
                   _InfoRow(
-                      label: 'Population',
+                      label: AppStrings.population,
                       value: '${widget.country.population}'),
                   _InfoRow(
-                      label: 'Superficie', value: '${widget.country.area} km²'),
+                      label: AppStrings.area,
+                      value: '${widget.country.area} ${AppStrings.km2}'),
                   _InfoRow(
-                      label: 'Langues',
+                      label: AppStrings.languages,
                       value: widget.country.languages.join(', ')),
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-            // Placeholder pour la carte interactive
             Text(
-              'Carte interactive',
-              style: Theme.of(context).textTheme.titleMedium,
+              AppStrings.interactiveMap,
+              style: PoppinsTextStyle.medium.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 8),
             Container(
@@ -89,12 +91,14 @@ class _CountryDetailledWidgetState extends State<CountryDetailledWidget> {
               ),
               child: Center(
                 child: Text(
-                  'Carte interactive ici - Upcoming feature',
-                  style: TextStyle(color: Colors.grey.shade600),
+                  AppStrings.upcoming,
+                  textAlign: TextAlign.center,
+                  style: PoppinsTextStyle.medium.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ),
             ),
-
             const SizedBox(height: 24),
           ],
         ),

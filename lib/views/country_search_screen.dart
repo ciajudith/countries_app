@@ -1,3 +1,4 @@
+import 'package:countries_app/constants/text.dart';
 import 'package:countries_app/models/api_client.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
       return Scaffold(
         body: Center(
           child: LottieBuilder.asset(
-            'assets/json/loading.json',
+            AppStrings.loadingJsonPath,
             width: 110,
             height: 110,
           ),
@@ -72,8 +73,11 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: AppColors.white,
+          surfaceTintColor: AppColors.gold.withValues(alpha: 0.1),
           title: Text(
-            'Rechercher un pays',
+            AppStrings.searchCountry,
             style: PoppinsTextStyle.medium.copyWith(
               color: AppColors.green,
               fontSize: 20,
@@ -97,21 +101,21 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
                     controller: controller,
                     focusNode: focusNode,
                     decoration: InputDecoration(
-                      hintText: 'Saisissez le nom d\'un pays',
+                      hintText: AppStrings.searchCountryHint,
+                      hintStyle: PoppinsTextStyle.regular.copyWith(
+                        color: AppColors.gray,
+                        fontSize: 14,
+                      ),
                       prefixIcon: const Icon(
                         Icons.search,
                         color: AppColors.goldDark,
                         size: 20,
                         weight: 4,
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.lightGray,
-                          width: 1,
-                        ),
-                      ),
                     ),
+                    onSubmitted: (controller) {
+                      FocusScope.of(context).unfocus();
+                    },
                   );
                 },
                 suggestionsCallback: (pattern) {
@@ -127,26 +131,35 @@ class _CountrySearchScreenState extends State<CountrySearchScreen> {
                     title: Text(country.name),
                   );
                 },
-                // plus de noItemsFoundBuilder, on utilise emptyBuilder
-                emptyBuilder: (ctx) => const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Text('Aucun pays trouvé'),
+                emptyBuilder: (ctx) => Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    AppStrings.noCountryFound,
+                    style: PoppinsTextStyle.regular.copyWith(
+                      color: AppColors.gray,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-                // à la sélection, on déclenche fetchCountry()
                 onSelected: (Country country) {
+                  FocusScope.of(context).unfocus();
                   ctrl.fetchCountry(country.name);
                 },
               ),
               const SizedBox(height: 20),
               if (ctrl.status == CountryStatus.loading)
-                LottieBuilder.asset(
-                  'assets/json/loading.json',
-                  width: 110,
-                  height: 110,
+                Expanded(
+                  child: Center(
+                    child: LottieBuilder.asset(
+                      AppStrings.loadingJsonPath,
+                      width: 110,
+                      height: 110,
+                    ),
+                  ),
                 ),
               if (ctrl.status == CountryStatus.error)
                 Text(
-                  ctrl.errorMessage ?? 'Erreur',
+                  ctrl.errorMessage ?? AppStrings.genericError,
                   style: PoppinsTextStyle.medium.copyWith(
                     color: AppColors.accent,
                   ),
